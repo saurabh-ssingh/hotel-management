@@ -1,72 +1,80 @@
-server:
-  port: 8083
-#  servlet:
-#    context-path: /rating-service
-
-spring:
-  application:
-    name: rating-service
-  datasource:
-    url: jdbc:mysql://localhost:3306/hotel_management
-    username: root
-    password: Saurabh*789
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  jpa:
-    hibernate:
-      ddl-auto: update # alternatives: none, validate, update, create, create-drop
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-        dialect: org.hibernate.dialect.MySQL8Dialect
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka
-    register-with-eureka: true
-    fetch-registry: true
-  instance:
-    prefer-ip-address: true
-
-otel:
-  exporter:
-    otlp:
-      endpoint: http://localhost:4318
-  resource:
-    attributes:
-      service:
-        name: rating-service
-  traces:
-    sampler:
-      ratio: 1.0
-
+#server:
+#  port: 8083
+##  servlet:
+##    context-path: /rating-service
+#
+#spring:
+#  application:
+#    name: rating-service
+#  datasource:
+#    url: jdbc:mysql://localhost:3306/hotel_management
+#    username: root
+#    password: Saurabh*789
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#  jpa:
+#    hibernate:
+#      ddl-auto: update # alternatives: none, validate, update, create, create-drop
+#    show-sql: true
+#    properties:
+#      hibernate:
+#        format_sql: true
+#        dialect: org.hibernate.dialect.MySQL8Dialect
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka
+#    register-with-eureka: true
+#    fetch-registry: true
+#  instance:
+#    prefer-ip-address: true
+#
+#otel:
+#  exporter:
+#    otlp:
+#      endpoint: http://localhost:4318
+#  resource:
+#    attributes:
+#      service:
+#        name: rating-service
+#  traces:
+#    sampler:
+#      ratio: 1.0
+#
+##management:
+##  tracing:
+##    sampling:
+##      probability: 1.0  # capture all traces
+##    otlp:
+##      endpoint: http://localhost:4318/v1/traces
+##
+##tracing:
+##  url: http://localhost:4318/v1/traces
+#
 #management:
 #  tracing:
 #    sampling:
-#      probability: 1.0  # capture all traces
-#    otlp:
-#      endpoint: http://localhost:4318/v1/traces
+#      probability: 1.0
+#    propagation:
+#      type: w3c
+#
+#  otlp:
+#    tracing:
+#      endpoint: http://localhost:4318/v1/traces  # or your Jaeger collector URL
+#
 #
 #tracing:
 #  url: http://localhost:4318/v1/traces
+#
+#
+#
+#
+#
+#
 
-management:
-  tracing:
-    sampling:
-      probability: 1.0
-    propagation:
-      type: w3c
-
-  otlp:
-    tracing:
-      endpoint: http://localhost:4318/v1/traces  # or your Jaeger collector URL
-
-
-tracing:
-  url: http://localhost:4318/v1/traces
-
-
-
-
+spring:
+  config:
+    import: configserver:http://localhost:8888
+  application:
+    name: rating-service
 
 
